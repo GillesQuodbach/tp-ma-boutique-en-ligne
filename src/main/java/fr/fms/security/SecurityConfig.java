@@ -18,8 +18,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-
     @Autowired
     DataSource dataSource;
 
@@ -32,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("select users_username as principal, roles_name as role from user_roles where users_username=?")
                 .rolePrefix("ROLE_")
                 .passwordEncoder(passwordEncoder());
-
     }
 
     @Bean
@@ -42,11 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().defaultSuccessUrl("/index",true);
 
+        http.formLogin().loginPage("/login").defaultSuccessUrl("/index",true);
         http.authorizeRequests().antMatchers("/index", "/save", "/delete", "/edit", "/article").hasRole("admins");
         http.authorizeRequests().antMatchers("/index").hasRole("users");
-
         http.exceptionHandling().accessDeniedPage("/403");
     }
 }
