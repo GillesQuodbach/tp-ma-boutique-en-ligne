@@ -22,7 +22,7 @@ public class Article implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Size(min = 5, max = 50)
+    @Size(min = 10, max = 50)
     private String description;
     @DecimalMin("50")
     private double price;

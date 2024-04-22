@@ -134,16 +134,6 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
         Role user = roleRepository.save(new Role("users", null));
         Role admin = roleRepository.save(new Role( "admins", null));
 
-//        List<Role> fredRoles = new ArrayList<>();
-//        fredRoles.add(admin);
-//        fredRoles.add(user);
-//        List<Role> josetteRoles=new ArrayList<>();
-//        josetteRoles.add(user);
-//
-//        String encodedPassword = passwordEncoder.encode("FmsAcad@2024$");
-//        User fred = userRepository.save(new User( "fred2024", encodedPassword, true, fredRoles));
-//        User josette = userRepository.save(new User( "josette", encodedPassword, true, josetteRoles));
-
         createUserWithRoles ("fred2024","fmsAcad@2024$", true, admin,user);
         createUserWithRoles ("Josette", "@Pelote2024!", true, user);
 

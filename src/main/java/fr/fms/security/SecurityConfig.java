@@ -36,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("select users_username as principal, roles_name as role from user_roles where users_username=?")
                 .rolePrefix("ROLE_")
                 .passwordEncoder(passwordEncoder());
-
     }
 
     @Bean
@@ -44,13 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    //    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.formLogin().loginPage("/login").defaultSuccessUrl("/index",true);
-//        http.authorizeRequests().antMatchers("/index", "/save", "/delete", "/edit", "/article").hasRole("admins");
-//        http.authorizeRequests().antMatchers("/index").hasRole("users");
-//        http.exceptionHandling().accessDeniedPage("/403");
-//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -58,8 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/index", true)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/index", "/save", "/delete", "/edit", "/article").hasRole("admins")
-                .antMatchers("/index").hasRole("users")
+                .antMatchers( "/save", "/delete", "/edit", "/article", "/cart").hasRole("admins")
+                .antMatchers("/cart").hasRole("users")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403")
