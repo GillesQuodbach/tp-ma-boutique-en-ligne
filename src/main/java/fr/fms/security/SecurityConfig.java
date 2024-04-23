@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/index", true)
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/save", "/delete", "/edit", "/article", "/cart").hasRole("admins")
+                .antMatchers( "/save", "/delete", "/edit", "/article", "/cart", "/update").hasRole("admins")
                 .antMatchers( "/cart").hasRole("users")
                 .and()
                 .exceptionHandling()
