@@ -13,6 +13,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long>{
 Page<Article> findByDescriptionContains(String description, Pageable pageable);
 Page<Article> findByCategoryName(String category, Pageable pageable);
 List<Article> findByCategoryName(String categoryName);
+List<Article> findByCategoryName(Category category);
 
 void deleteById(Long id);
+
+
+
 }

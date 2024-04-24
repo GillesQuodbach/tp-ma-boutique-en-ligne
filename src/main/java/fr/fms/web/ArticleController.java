@@ -1,5 +1,6 @@
 package fr.fms.web;
 
+import fr.fms.business.IBusinessImpl;
 import fr.fms.dao.ArticleRepository;
 import fr.fms.dao.CategoryRepository;
 import fr.fms.entities.Article;
@@ -31,6 +32,20 @@ public class ArticleController {
         this.articleRepository = articleRepository;
         this.categoryRepository = categoryRepository;
     }
+
+    @Autowired
+    IBusinessImpl businessImpl;
+
+    @RequestMapping("/")
+    public @ResponseBody String home() {
+        return "hello";
+    }
+
+    @RequestMapping("/greating")
+    public @ResponseBody String greating() {
+        return businessImpl.great();
+    }
+
     /** "/index" mapping
      * @author Gilles
      * @param model spring model
@@ -162,6 +177,7 @@ public class ArticleController {
     public String error() {
         return "403";
     }
+
 
 }
 
