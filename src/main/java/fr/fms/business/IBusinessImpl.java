@@ -107,8 +107,6 @@ public class IBusinessImpl implements IBusiness {
   public String great() {
     return "Hello World";
   }
-
-
 }
 
 

@@ -4,6 +4,7 @@ import fr.fms.dao.ArticleRepository;
 import fr.fms.dao.CategoryRepository;
 import fr.fms.entities.Article;
 import fr.fms.entities.Category;
+import fr.fms.entities.OrderItem;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +47,10 @@ public class BusinessTest {
         List<Article> articles = articleRepository.findAll();
         assertThat(articles).isNotEmpty();
     }
+
+   /* @Test
+    public void FindCartContent() {
+        List<OrderItem> cartContent = orderItemRepository.findAll();
+        assertThat(cartContent).isNotEmpty();
+    }*/
 }
