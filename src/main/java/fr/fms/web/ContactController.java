@@ -77,7 +77,7 @@ public class ContactController {
         }
         List<Category> listCategories = categoryRepository.findAll();
         model.addAttribute("categories", listCategories);
-        return "contact";
+        return "contacts";
     }
 
 
@@ -153,23 +153,24 @@ public class ContactController {
     /**
      * save article
      *
-     * @param articleDTO    article to save
+     *
      * @param bindingResult validation object
      * @author Gilles
      */
-//    @PostMapping("/save")
-//    public String save(@Valid @ModelAttribute("contact") Contact contact, BindingResult bindingResult, Model model) {
-//        if (bindingResult.hasErrors()) {
-//            List<Category> catList = categoryRepository.findAll();
-//            model.addAttribute(CAT_LIST, catList);
-//            return contactString;
-//        }
-//        Contact savedContact = new Contact(contact.getName(), contact.getFirstName());
-//        Category category = categoryRepository.findById(contact.getCategory()).orElse(null);
-//        savedContact.setCategory(category);
-//        articleRepository.save(savedContact);
-//        return "redirect:/index";
-//    }
+    @PostMapping("/save")
+    public String save(@Valid @ModelAttribute("contact") ContactDTO contactDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            List<Category> catList = categoryRepository.findAll();
+            model.addAttribute(CAT_LIST, catList);
+            return contactString;
+        }
+        Contact contact = new Contact(contactDTO.getName(), contactDTO.getFirstName(), contactDTO.getEmail(), contactDTO.getPhone(), contactDTO.getAddress());
+        //  ! ICI la catégorie est NULL
+        Category category = categoryRepository.findById(contactDTO.getCategoryId()).orElse(null);
+        contact.setCategory(category);
+        contactRepository.save(contact);
+        return "redirect:/index";
+    }
 
 
     /**
