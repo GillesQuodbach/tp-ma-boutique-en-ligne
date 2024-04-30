@@ -140,10 +140,13 @@ public class ContactController {
         if (contactToUpdateOptionnal.isPresent() && contactCat.isPresent()) {
             Contact contact = contactToUpdateOptionnal.get();
             Category cat = contactCat.get();
-            contact.setId(contact.getId());
-            contact.setName(contact.getName());
-            contact.setFirstName(contact.getFirstName());
 
+            contact.setId(contact.getId());
+            contact.setName(contactToUpdate.getName());
+            contact.setFirstName(contactToUpdate.getFirstName());
+            contact.setEmail(contactToUpdate.getEmail());
+            contact.setPhone(contactToUpdate.getPhone());
+            contact.setAddress(contactToUpdate.getAddress());
             contact.setCategory(cat);
             contactRepository.save(contact);
         }

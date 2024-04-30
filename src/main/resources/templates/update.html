@@ -11,24 +11,39 @@
 <div layout:fragment="content">
     <div class="col-md-4 col-xs-8">
         <div class="panel panel-primary">
-            <div class="panel-heading">Modifier article</div>
+            <div class="panel-heading">Update a contact</div>
             <div class="panel-body">
-                <form method="post" th:action="@{/toUpdate(id=${article.id})}">
+                <form method="post" th:action="@{/toUpdate(id=${contact.id})}">
                     <div class="form-group">
-                        <label class="control-label"> Description : </label>
-                        <input class="form-control" name="description" th:value="${article.description}" type="text">
-                        <span class="text-danger" th:errors="${article.description}"></span>
+                        <label class="control-label"> Name : </label>
+                        <input class="form-control" name="name" th:value="${contact.name}" type="text">
+                        <span class="text-danger" th:errors="${contact.name}"></span>
                     </div>
                     <div class="form-group">
-                        <label class="control-label"> Price : </label>
-                        <input class="form-control" name="price" th:value="${article.price}" type="text">
-                        <span class="text-danger" th:errors="${article.price}"></span>
+                        <label class="control-label"> FirstName : </label>
+                        <input class="form-control" name="firstName" th:value="${contact.firstName}" type="text">
+                        <span class="text-danger" th:errors="${contact.firstName}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"> Email : </label>
+                        <input class="form-control" name="email" th:value="${contact.email}" type="text">
+                        <span class="text-danger" th:errors="${contact.email}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"> Phone : </label>
+                        <input class="form-control" name="phone" th:value="${contact.phone}" type="text">
+                        <span class="text-danger" th:errors="${contact.phone}"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"> Address : </label>
+                        <input class="form-control" name="address" th:value="${contact.address}" type="text">
+                        <span class="text-danger" th:errors="${contact.address}"></span>
                     </div>
                     <div class="form-group">
                         <label class="control-label"> Categories : </label>
                         <select class="form-control" id="category" name="categoryId">
                             <option th:each="category: ${catList}"
-                                    th:selected="${category.id == article.category.id}"
+                                    th:selected="${category.id == contact.category.id}"
                                     th:text="${category.name}"
                                     th:value="${category.id}"
 
