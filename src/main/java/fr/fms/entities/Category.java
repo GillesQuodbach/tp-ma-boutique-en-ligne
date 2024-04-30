@@ -41,7 +41,7 @@ public class Category implements Serializable {
      */
     @OneToMany(mappedBy = "category")
     @ToString.Exclude
-    private Collection<Article> articles;
+    private Collection<Contact> contact;
 
 
 }
