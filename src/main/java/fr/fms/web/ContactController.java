@@ -1,6 +1,5 @@
 package fr.fms.web;
 
-import fr.fms.business.IBusinessImpl;
 import fr.fms.dao.CategoryRepository;
 import fr.fms.dao.ContactRepository;
 import fr.fms.entities.*;
@@ -30,14 +29,14 @@ public class ContactController {
     private static final String KEYWORD = "keyword";
     private final ContactRepository contactRepository;
     private final CategoryRepository categoryRepository;
-    private final IBusinessImpl business;
+
     String contactString = "contact";
 
     @Autowired
-    public ContactController(ContactRepository contactRepository, CategoryRepository categoryRepository, IBusinessImpl business) {
+    public ContactController(ContactRepository contactRepository, CategoryRepository categoryRepository) {
         this.contactRepository = contactRepository;
         this.categoryRepository = categoryRepository;
-        this.business = business;
+
     }
 
     /**
@@ -53,7 +52,6 @@ public class ContactController {
                         @RequestParam(name = "firstName", defaultValue = "") String firstName,
                         @RequestParam(name = "category", defaultValue = "") String category) {
 
-        model.addAttribute("cartSize", business.getCartSize());
         if (!name.isEmpty() || !firstName.isEmpty()) {
             Page<Contact> contacts = contactRepository.findByNameContainingIgnoreCaseAndFirstNameContainingIgnoreCase(name, firstName, PageRequest.of(page, 5));
             model.addAttribute(LIST_ARTICLE, contacts.getContent());

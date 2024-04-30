@@ -1,6 +1,6 @@
 package fr.fms.web;
 
-import fr.fms.business.IBusinessImpl;
+
 import fr.fms.dao.CustomerRepository;
 import fr.fms.dao.OrderItemRepository;
 import fr.fms.dao.OrderRepository;
@@ -32,17 +32,17 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
-    private final IBusinessImpl business;
+
     private final UserController userController;
 
     public OrderController(CustomerRepository customerRepository, OrderRepository orderRepository,
                            OrderItemRepository orderItemRepository, UserRepository userRepository,
-                           IBusinessImpl business, UserController userController) {
+                           UserController userController) {
         this.customerRepository = customerRepository;
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.userRepository = userRepository;
-        this.business = business;
+
         this.userController = userController;
     }
 
@@ -69,37 +69,7 @@ public class OrderController {
         return "redirect:/order";
     }
 
-    /**
-     * Order page mapping
-     *
-     * @param model spring model
-     * @return order page
-     */
-    @GetMapping("/order")
-    String order(Model model) {
-        model.addAttribute("listOrderItem", business.getCartContent());
-        model.addAttribute(CUSTOMER, business.getCustomer());
-        model.addAttribute("totalAmount", business.getTotalAmountOrder());
-        return "order";
-    }
 
-    /**
-     * save all element of order and list orderItem into database
-     *
-     * @return redirect to index
-     */
-    @GetMapping("/saveOrder")
-    public String saveOrder() {
-        List<OrderItem> orderItems = business.getCartContent();
-        Customer customer = business.getCustomer();
-        double totalAmount = business.getTotalAmountOrder();
-        if (customer == null || orderItems.isEmpty()) return "redirect:/404";
-        Order order = orderRepository.save(new Order(null, LocalDate.now(), totalAmount, customer, orderItems));
-        orderItems.forEach(orderItem -> {
-            orderItem.setOrder(order);
-            orderItemRepository.save(new OrderItem(null, orderItem.getQuantity(), orderItem.getTotalPrice(), orderItem.getArticle(), orderItem.getOrder()));
-        });
-        business.clearCart();
-        return "redirect:/index";
-    }
+
+
 }

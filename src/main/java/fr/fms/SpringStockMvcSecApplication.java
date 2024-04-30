@@ -18,8 +18,6 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(SpringStockMvcSecApplication.class);
 
-    private final ArticleRepository articleRepository;
-
     private final ContactRepository contactRepository;
 
     private final CategoryRepository categoryRepository;
@@ -31,8 +29,7 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SpringStockMvcSecApplication(ArticleRepository articleRepository, ContactRepository contactRepository, CategoryRepository categoryRepository, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        this.articleRepository = articleRepository;
+    public SpringStockMvcSecApplication(ContactRepository contactRepository, CategoryRepository categoryRepository, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.contactRepository = contactRepository;
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;

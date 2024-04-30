@@ -1,6 +1,5 @@
 package fr.fms;
 
-import fr.fms.dao.ArticleRepository;
 import fr.fms.dao.CategoryRepository;
 import fr.fms.entities.Article;
 import org.junit.jupiter.api.Test;
