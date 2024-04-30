@@ -76,8 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/index", true)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/save", "/delete", "/edit", "/article").hasRole("admins")
-                .antMatchers("/cart", "/customer", "/order", "/saveCustomer", "/saveOrder").hasRole("users")
+                .antMatchers("/save", "/delete", "/edit", "/contact").hasRole("users")
+
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/403")

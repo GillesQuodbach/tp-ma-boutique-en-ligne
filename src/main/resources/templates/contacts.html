@@ -52,12 +52,12 @@
                         <td th:text="${a.email}"></td>
                         <td th:text="${a.phone}"></td>
                         <td th:text="${a.address}"></td>
-                        <td sec:authorize="hasRole('ROLE_admins')">
+                        <td sec:authorize="hasRole('ROLE_users')">
                             <a class="btn btn-danger" onclick="return confirm('Etes vous sur?')"
                                th:href="@{/delete(id=${a.id}, page=${currentPage}, keyword=${keyword}, category=${category})}">Delete</a>
 
                         </td>
-                        <td sec:authorize="hasRole('ROLE_admins')">
+                        <td sec:authorize="hasRole('ROLE_users')">
                             <a class="btn btn-primary"
                                th:href="@{/update(id=${a.id})}">Update</a>
 
