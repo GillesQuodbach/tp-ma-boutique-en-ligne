@@ -33,13 +33,11 @@ public class Contact implements Serializable {
      * contact name
      */
     @NotNull
-    @Size(min = 5, max = 50)
     private String name;
     /**
      * contact firstName
      */
     @NotNull
-    @Size(min = 5, max = 50)
     private String firstName;
 
     /**
