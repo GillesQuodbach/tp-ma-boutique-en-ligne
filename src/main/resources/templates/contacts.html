@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr" layout:decorate="layout"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
       xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Mes contacts</title>
+    <title>My contacts</title>
     <link href="../static/bootstrap.min.css" rel="stylesheet" th:href="@{css/bootstrap.min.css}">
 </head>
 
@@ -12,7 +13,7 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="panel panel-primary cat-container">
-            <div class="panel-heading">Catégories</div>
+            <div class="panel-heading">Categories</div>
             <div class="panel-body">
                 <ul class="list-group list-group-horizontal">
                     <li class="list-group-item" th:each="c:${categories}">
@@ -24,14 +25,17 @@
     </div>
     <div class="container">
         <div class="panel panel-primary">
-            <div class="panel-heading">Liste des contacts</div>
+            <div class="panel-heading">Contact list</div>
 
             <div class="panel-body">
                 <form method="get" th:action="@{/index(category=${category})}">
-                    <label>keyword</label>
-                    <input name="keyword" th:value="${keyword}" type="text">
+                    <label>Name</label>
+                    <input name="name" th:value="${name}" type="text">
+                    <label>Firstname</label>
+                    <input name="firstName" th:value="${firstName}" type="text">
                     <button class="btn btn-primary" type="submit"> Search</button>
                 </form>
+
                 <table class="table">
                     <tr>
                         <th>Id</th>

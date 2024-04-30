@@ -49,26 +49,23 @@ public class ContactController {
      */
     @GetMapping("/index")
     public String index(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
-                        @RequestParam(name = "keyword", defaultValue = "") String kw,
+                        @RequestParam(name = "name", defaultValue = "") String name,
+                        @RequestParam(name = "firstName", defaultValue = "") String firstName,
                         @RequestParam(name = "category", defaultValue = "") String category) {
 
         model.addAttribute("cartSize", business.getCartSize());
-        if (!kw.isEmpty()) {
-            Page<Contact> contacts = contactRepository.findByNameContainingIgnoreCase(kw, PageRequest.of(page, 5));
+        if (!name.isEmpty() || !firstName.isEmpty()) {
+            Page<Contact> contacts = contactRepository.findByNameContainingIgnoreCaseAndFirstNameContainingIgnoreCase(name, firstName, PageRequest.of(page, 5));
             model.addAttribute(LIST_ARTICLE, contacts.getContent());
             model.addAttribute(PAGES, new int[contacts.getTotalPages()]);
             model.addAttribute(CURRENT_PAGE, page);
-            model.addAttribute(KEYWORD, kw);
-
-
+            model.addAttribute(KEYWORD, name); // Utiliser le nom comme mot-clé pour l'affichage dans le formulaire
         } else if (!category.isEmpty()) {
             Page<Contact> contactsByCategory = contactRepository.findByCategoryName(category, PageRequest.of(page, 5));
             model.addAttribute(LIST_ARTICLE, contactsByCategory.getContent());
             model.addAttribute(PAGES, new int[contactsByCategory.getTotalPages()]);
             model.addAttribute(CURRENT_PAGE, page);
             model.addAttribute("category", category);
-
-
         } else {
             Page<Contact> allContacts = contactRepository.findAll(PageRequest.of(page, 5));
             model.addAttribute(LIST_ARTICLE, allContacts.getContent());
@@ -129,7 +126,6 @@ public class ContactController {
     }
 
 
-
     @PostMapping("/toUpdate")
     public String toUpdate(Long id, @Valid @ModelAttribute("updatedContact") ContactToUpdate contactToUpdate, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return contactString;
@@ -155,7 +151,6 @@ public class ContactController {
 
     /**
      * save article
-     *
      *
      * @param bindingResult validation object
      * @author Gilles
