@@ -43,6 +43,8 @@ public class Category implements Serializable {
     @ToString.Exclude
     private Collection<Contact> contact;
 
-
+    // Test constructor
+    public Category(String test) {
+    }
 }
 
