@@ -57,11 +57,6 @@ public class Customer implements Serializable {
     @Pattern(regexp = "^\\d{10,14}$", message = "contains only numbers")
     private String phone;
 
-    /**
-     * Entity relationship with order
-     */
-    @OneToMany(mappedBy = "customer")
-    private Collection<Order> orders;
 
     /**
      * Entity relationship with user

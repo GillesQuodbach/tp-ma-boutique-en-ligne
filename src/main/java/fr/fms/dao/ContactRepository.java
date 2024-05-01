@@ -1,6 +1,5 @@
 package fr.fms.dao;
 
-import fr.fms.entities.Article;
 import fr.fms.entities.Contact;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
