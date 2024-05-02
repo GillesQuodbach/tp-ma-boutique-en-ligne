@@ -44,12 +44,16 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-        Category PERSONAL = categoryRepository.save(new Category(null, "Personnal", "personnal contacts", null));
-        Category WORK = categoryRepository.save(new Category(null, "Professional", "professional contacts", null));
-        Category FAMILY = categoryRepository.save(new Category(null, "Family", "family members", null));
-        Category OTHER = categoryRepository.save(new Category(null, "Other", "other contacts", null));
-
+        Category PERSONAL = null;
+        Category WORK = null;
+        Category  FAMILY = null;
+        Category OTHER = null;
+        if (categoryRepository.count() == 0) {
+            PERSONAL = categoryRepository.save(new Category(null, "Personnal", "personnal contacts", null));
+            WORK = categoryRepository.save(new Category(null, "Professional", "professional contacts", null));
+            FAMILY = categoryRepository.save(new Category(null, "Family", "family members", null));
+            OTHER = categoryRepository.save(new Category(null, "Other", "other contacts", null));
+        }
         contactRepository.save(new Contact("Sophia", "Lopez", "example4@gmail.com", "0667890123", "789 Oak Street", WORK));
         contactRepository.save(new Contact("Elijah", "Brown", "example8@gmail.com", "0656789012", "123 Main Street", PERSONAL));
         contactRepository.save(new Contact("Lucas", "Rodriguez", "example2@gmail.com", "0689012345", "789 Oak Street", PERSONAL));
