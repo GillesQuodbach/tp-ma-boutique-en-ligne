@@ -46,12 +46,38 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        if (categoryRepository.count() == 0) {
-            PERSONAL = categoryRepository.save(new Category(null, "Personnal", "personnal contacts", null));
-            WORK = categoryRepository.save(new Category(null, "Professional", "professional contacts", null));
-            FAMILY = categoryRepository.save(new Category(null, "Family", "family members", null));
-            OTHER = categoryRepository.save(new Category(null, "Other", "other contacts", null));
+        PERSONAL = categoryRepository.findByName("Personal");
+        WORK = categoryRepository.findByName("Professional");
+        FAMILY = categoryRepository.findByName("Family");
+        OTHER = categoryRepository.findByName("Other");
+        if (PERSONAL == null) {
+            PERSONAL = new Category(null, "Personal", "personnal contacts", null);
+            categoryRepository.save(PERSONAL);
         }
+        if(WORK == null){
+            WORK = new Category(null, "Professional", "professional contacts", null);
+            categoryRepository.save(WORK);
+        }
+        if(FAMILY == null){
+            FAMILY = new Category(null, "Family", "family members", null);
+            categoryRepository.save(FAMILY);
+        }
+        if(OTHER == null){
+            OTHER = new Category(null, "Other", "other contacts", null);
+            categoryRepository.save(OTHER);
+        }
+//        if (PERSONAL.getId() == null){
+//            categoryRepository.save(PERSONAL);
+//        }
+//        if (WORK.getId() == null){
+//            categoryRepository.save(WORK);
+//        }
+//        if (FAMILY.getId() == null){
+//            categoryRepository.save(FAMILY);
+//        }
+//        if (OTHER.getId() == null){
+//            categoryRepository.save(OTHER);
+//        }
         contactRepository.save(new Contact("Sophia", "Lopez", "example4@gmail.com", "0667890123", "789 Oak Street", WORK));
         contactRepository.save(new Contact("Elijah", "Brown", "example8@gmail.com", "0656789012", "123 Main Street", PERSONAL));
         contactRepository.save(new Contact("Lucas", "Rodriguez", "example2@gmail.com", "0689012345", "789 Oak Street", PERSONAL));
