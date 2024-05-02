@@ -160,11 +160,17 @@ public class ContactController {
             model.addAttribute(CAT_LIST, catList);
             return contactString;
         }
-        Contact contact = new Contact(contactDTO.getName(), contactDTO.getFirstName(), contactDTO.getEmail(), contactDTO.getPhone(), contactDTO.getAddress());
-        //  ! ICI la catégorie est NULL
+
+
         Category category = categoryRepository.findById(contactDTO.getCategoryId()).orElse(null);
-        contact.setCategory(category);
-        contactRepository.save(contact);
+        if (category != null) {
+            Contact contact = new Contact(contactDTO.getName(), contactDTO.getFirstName(), contactDTO.getEmail(), contactDTO.getPhone(), contactDTO.getAddress());
+            contact.setCategory(category);
+            contactRepository.save(contact);
+
+        } else {
+            System.out.println("aucune catégorie trouvée");
+        }
         return "redirect:/index";
     }
 

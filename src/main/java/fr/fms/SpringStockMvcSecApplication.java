@@ -17,16 +17,17 @@ import java.util.List;
 public class SpringStockMvcSecApplication implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(SpringStockMvcSecApplication.class);
-
     private final ContactRepository contactRepository;
-
     private final CategoryRepository categoryRepository;
-
     private final UserRepository userRepository;
-
     private final RoleRepository roleRepository;
-
     private final PasswordEncoder passwordEncoder;
+
+    // Variable de catégories
+    private Category PERSONAL;
+    private Category WORK;
+    private Category FAMILY;
+    private Category OTHER;
 
     @Autowired
     public SpringStockMvcSecApplication(ContactRepository contactRepository, CategoryRepository categoryRepository, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
@@ -44,10 +45,7 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Category PERSONAL = null;
-        Category WORK = null;
-        Category  FAMILY = null;
-        Category OTHER = null;
+
         if (categoryRepository.count() == 0) {
             PERSONAL = categoryRepository.save(new Category(null, "Personnal", "personnal contacts", null));
             WORK = categoryRepository.save(new Category(null, "Professional", "professional contacts", null));
