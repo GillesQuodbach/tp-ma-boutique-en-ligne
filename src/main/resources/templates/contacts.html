@@ -28,6 +28,7 @@
             <div class="panel-heading">Contact list</div>
 
             <div class="panel-body">
+                <div  sec:authorize="hasRole('ROLE_users')">
                 <form method="get" th:action="@{/index(category=${category})}">
                     <label>Name</label>
                     <input name="name" th:value="${name}" type="text">
@@ -35,7 +36,7 @@
                     <input name="firstName" th:value="${firstName}" type="text">
                     <button class="btn btn-primary" type="submit"> Search</button>
                 </form>
-
+                </div>
                 <table class="table">
                     <tr>
                         <th>Id</th>

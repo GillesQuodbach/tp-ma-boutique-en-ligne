@@ -6,17 +6,20 @@ import fr.fms.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * article controller
+ * contact controller
  *
  * @author Gilles
  */
@@ -50,26 +53,44 @@ public class ContactController {
     public String index(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
                         @RequestParam(name = "name", defaultValue = "") String name,
                         @RequestParam(name = "firstName", defaultValue = "") String firstName,
-                        @RequestParam(name = "category", defaultValue = "") String category) {
+                        @RequestParam(name = "category", defaultValue = "") String category,
+                        Authentication authentication) {
 
-        if (!name.isEmpty() || !firstName.isEmpty()) {
-            Page<Contact> contacts = contactRepository.findByNameContainingIgnoreCaseAndFirstNameContainingIgnoreCase(name, firstName, PageRequest.of(page, 5));
-            model.addAttribute(LIST_ARTICLE, contacts.getContent());
-            model.addAttribute(PAGES, new int[contacts.getTotalPages()]);
-            model.addAttribute(CURRENT_PAGE, page);
-            model.addAttribute(KEYWORD, name); // Utiliser le nom comme mot-clé pour l'affichage dans le formulaire
-        } else if (!category.isEmpty()) {
-            Page<Contact> contactsByCategory = contactRepository.findByCategoryName(category, PageRequest.of(page, 5));
-            model.addAttribute(LIST_ARTICLE, contactsByCategory.getContent());
-            model.addAttribute(PAGES, new int[contactsByCategory.getTotalPages()]);
-            model.addAttribute(CURRENT_PAGE, page);
-            model.addAttribute("category", category);
+        if (authentication != null && authentication.isAuthenticated()) {
+            if (!name.isEmpty() || !firstName.isEmpty()) {
+                // Recherche par nom et prénom
+                Page<Contact> contacts = contactRepository.findByNameContainingIgnoreCaseAndFirstNameContainingIgnoreCase(name, firstName, PageRequest.of(page, 5));
+                model.addAttribute(LIST_ARTICLE, contacts.getContent());
+                model.addAttribute(PAGES, new int[contacts.getTotalPages()]);
+                model.addAttribute(CURRENT_PAGE, page);
+                model.addAttribute(KEYWORD, name);
+            } else if (!category.isEmpty()) {
+                // Recherche par catégorie
+                Page<Contact> contactsByCategory = contactRepository.findByCategoryName(category, PageRequest.of(page, 5));
+                model.addAttribute(LIST_ARTICLE, contactsByCategory.getContent());
+                model.addAttribute(PAGES, new int[contactsByCategory.getTotalPages()]);
+                model.addAttribute(CURRENT_PAGE, page);
+                model.addAttribute("category", category);
+            } else {
+                // Affichage de tous les contacts
+                Page<Contact> allContacts = contactRepository.findAll(PageRequest.of(page, 5));
+                model.addAttribute(LIST_ARTICLE, allContacts.getContent());
+                model.addAttribute(PAGES, new int[allContacts.getTotalPages()]);
+                model.addAttribute(CURRENT_PAGE, page);
+            }
         } else {
-            Page<Contact> allContacts = contactRepository.findAll(PageRequest.of(page, 5));
-            model.addAttribute(LIST_ARTICLE, allContacts.getContent());
-            model.addAttribute(PAGES, new int[allContacts.getTotalPages()]);
-            model.addAttribute(CURRENT_PAGE, page);
+            // Si pas connecté affichage fake contact
+            List<Contact> fakeContact = new ArrayList<>();
+
+            fakeContact.add(new Contact((long)1,"Luke", "Skywalker", "luke@example.com", "0667890123", "789 Oak Street", null));
+            fakeContact.add(new Contact((long)2,"Leia", "Organa", "leia@example.com", "0667890123", "789 Oak Street", null));
+            fakeContact.add(new Contact((long)3,"Han", "Solo", "han@example.com", "0667890123", "789 Oak Street", null));
+            fakeContact.add(new Contact((long)4,"Darth", "Vader", "vader@example.com", "0667890123", "789 Oak Street", null));
+            fakeContact.add(new Contact((long)5,"Obi-Wan", "Kenobi", "obiwan@example.com", "0667890123", "789 Oak Street", null));
+
+            model.addAttribute(LIST_ARTICLE, fakeContact);
         }
+        //Affichage des catégories
         List<Category> listCategories = categoryRepository.findAll();
         model.addAttribute("categories", listCategories);
         return "contacts";
@@ -77,13 +98,13 @@ public class ContactController {
 
 
     /**
-     * add new article mapping
+     * add new contact mapping
      *
      * @param model spring model
      * @author Gilles
      */
     @GetMapping("/contact")
-    public String article(Model model) {
+    public String contact(Model model) {
         model.addAttribute("contact", new Contact());
         List<Category> catList = categoryRepository.findAll();
         model.addAttribute(CAT_LIST, catList);
@@ -93,7 +114,7 @@ public class ContactController {
     /**
      * delete mapping
      *
-     * @param id   article id
+     * @param id   contact id
      * @param page page number
      * @author Gilles
      * @params keyword searched keyword
@@ -105,7 +126,7 @@ public class ContactController {
     }
 
     /**
-     * update article mapping
+     * update contact mapping
      *
      * @param model spring model
      * @param id    article id to update
@@ -148,7 +169,7 @@ public class ContactController {
     }
 
     /**
-     * save article
+     * save contact
      *
      * @param bindingResult validation object
      * @author Gilles
@@ -160,7 +181,6 @@ public class ContactController {
             model.addAttribute(CAT_LIST, catList);
             return contactString;
         }
-
 
         Category category = categoryRepository.findById(contactDTO.getCategoryId()).orElse(null);
         if (category != null) {

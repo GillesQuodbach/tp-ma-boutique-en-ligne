@@ -66,18 +66,7 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
             OTHER = new Category(null, "Other", "other contacts", null);
             categoryRepository.save(OTHER);
         }
-//        if (PERSONAL.getId() == null){
-//            categoryRepository.save(PERSONAL);
-//        }
-//        if (WORK.getId() == null){
-//            categoryRepository.save(WORK);
-//        }
-//        if (FAMILY.getId() == null){
-//            categoryRepository.save(FAMILY);
-//        }
-//        if (OTHER.getId() == null){
-//            categoryRepository.save(OTHER);
-//        }
+
         contactRepository.save(new Contact("Sophia", "Lopez", "example4@gmail.com", "0667890123", "789 Oak Street", WORK));
         contactRepository.save(new Contact("Elijah", "Brown", "example8@gmail.com", "0656789012", "123 Main Street", PERSONAL));
         contactRepository.save(new Contact("Lucas", "Rodriguez", "example2@gmail.com", "0689012345", "789 Oak Street", PERSONAL));
@@ -124,10 +113,8 @@ public class SpringStockMvcSecApplication implements CommandLineRunner {
 
     public void generateData() {
         Role user = roleRepository.save(new Role("users", null));
-
         createUserWithRoles("fred2024", "fmsAcad@2024$", true, user);
         createUserWithRoles("Josette", "@Pelote2024!", true, user);
-
     }
 
     private void createUserWithRoles(String username, String password, boolean active, Role... roles) {

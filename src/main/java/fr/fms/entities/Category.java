@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * article category class definition
+ * Contact category class definition
  *
  * @author Gilles
  */
@@ -37,14 +37,14 @@ public class Category implements Serializable {
     private String description;
 
     /**
-     * article in a category
+     * contact in a category
      */
     @OneToMany(mappedBy = "category")
     @ToString.Exclude
     private Collection<Contact> contact;
 
-    // Test constructor
-    public Category(String test) {
+
+    public Category(String name) {
     }
 }
 

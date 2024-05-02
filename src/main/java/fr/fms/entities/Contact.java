@@ -13,7 +13,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
 
 /**
- * Article class definition
+ * Contact class definition
  *
  * @author Gilles
  */
@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @ToString
 public class Contact implements Serializable {
     /**
-     * article id
+     * contact id
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

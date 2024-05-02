@@ -37,7 +37,7 @@
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a th:href="@{/index}">Home</a></li>
-                <li class="nav-item"><a th:href="@{/contact}">New contact</a></li>
+                <li class="nav-item"><a th:href="@{/contact}"  sec:authorize="hasRole('ROLE_users')">New contact</a></li>
             </ul>
             <ul class="nav navbar-nav pull-right">
                 <li><a class="btn btn-default" th:href="@{/login}">LogIn</a></li>
