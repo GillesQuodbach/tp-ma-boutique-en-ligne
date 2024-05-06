@@ -120,9 +120,18 @@ public class ContactController {
      * @params keyword searched keyword
      */
     @GetMapping("/delete")
-    public String delete(Long id, int page, String keyword) {
+    public String delete(Long id, Model model, @RequestParam(name = "page", defaultValue = "0") int page,
+                         @RequestParam(name = "name", defaultValue = "") String name,
+                         @RequestParam(name = "firstName", defaultValue = "") String firstName) {
         contactRepository.deleteById(id);
-        return "redirect:/index?page=" + page + "&keyword=" + keyword;
+
+        // Création de l'URL de redirection avec les paramètres de recherche
+        String redirectUrl = "/index?page=" + page;
+        if (!name.isEmpty() || !firstName.isEmpty()) {
+            redirectUrl += "&name=" + name + "&firstName=" + firstName;
+        }
+
+        return "redirect:" + redirectUrl;
     }
 
     /**
