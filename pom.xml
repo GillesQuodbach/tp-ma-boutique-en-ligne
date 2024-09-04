@@ -15,6 +15,7 @@
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>8</java.version>
+        <sonar.token>sqa_df7d383b7ed0d0956379b25e02ac2736076cde8a</sonar.token>
     </properties>
     <dependencies>
         <dependency>
