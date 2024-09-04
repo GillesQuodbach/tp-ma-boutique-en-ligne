@@ -1,4 +1,4 @@
 FROM openjdk:8
 EXPOSE 8080
-ADD target/devops-spring-app.jar devops-spring-app.jar
-ENTRYPOINT ["java","-jar","/devops-spring-app.jar"]
+ADD target/SpringStockMvcSec-0.0.1-SNAPSHOT.jar SpringStockMvcSec-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java","-jar","/SpringStockMvcSec-0.0.1-SNAPSHOT.jar"]
