@@ -1,0 +1,31 @@
+version: '3.8' # Version de Docker Compose
+
+services: # Définition des services
+  db: # Service MariaDB
+    image: mariadb # L'image Docker de MariaDB
+    container_name: my-mariadb # Nom du conteneur
+    environment: # Variables d'environnement pour la base de données
+      MYSQL_ROOT_PASSWORD: fms2024
+      MYSQL_DATABASE: stocks
+    ports:
+      - "3306:3306" # Exposition du port 3306 pour MariaDB
+    networks:
+      - app-network # Ajout du conteneur au réseau Docker
+
+  backend: # Service backend Spring Boot
+    image: theblob/tp-ma-boutique-en-ligne:latest # Image Docker du backend (à créer avec un Dockerfile)
+    container_name: tp-ma-boutique-en-ligne # Nom du conteneur pour l'application backend
+    environment: # Variables d'environnement pour configurer l'application
+      SPRING_DATASOURCE_URL: jdbc:mariadb://localhost:3306/stocks
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: fms2024
+    depends_on:
+      - db # Démarre le service "db" avant celui-ci
+    ports:
+      - "8081:8080" # Exposition du port 8080 pour le backend
+    networks:
+      - app-network # Ajout du conteneur au même réseau que MariaDB
+
+networks:
+  app-network: # Définition d'un réseau commun pour les services
+    driver: bridge
